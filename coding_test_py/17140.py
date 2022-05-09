@@ -7,7 +7,7 @@ C -= 1
 A = [list(map(int, input().split())) for _ in range(3)]
 
 def cus_sort(li):
-    temp = Counter(li)
+    temp = Counter(li[:100])
     t_temp = []
     for it in temp.items():
         if it[0] != 0:
