@@ -13,7 +13,7 @@ dirs = ((-1,0),(1,0),(0,-1),(0,1))
 
 ans = 0
 
-while sum(sum(row) for row in board) != 1 and ans < 1000:
+while sum(sum(row) for row in board) != 1 and ans < 1001:
     # move
     for l in range(M):
         temp_shark = l+1
@@ -70,7 +70,7 @@ while sum(sum(row) for row in board) != 1 and ans < 1000:
     
     ans += 1
 
-if ans == 1000:
+if ans == 1001:
     print(-1)
 else:
     print(ans)
