@@ -11,6 +11,21 @@ cargos.sort()
 if cranes[-1] < cargos[-1]:
     print(-1)
 else:
+    cargos.reverse()
+    temp_dict = [0] * len(cranes)
+    for cargo in cargos:
+        for i, crane in enumerate(cranes[:-1]):
+            if temp_dict[i+1] > temp_dict[i] and\
+               crane >= cargo:
+                temp_dict[i] += 1
+                break
+        else:
+            temp_dict[-1] += 1
+         
+    ans = temp_dict[-1]
+
+
+    '''
     temp_dict = [0] * len(cranes)
     j = 0
     for i in cargos:
@@ -25,4 +40,5 @@ else:
                     break
                 temp_dict[j] -= 1
         ans += 1
+    '''
     print(ans)
