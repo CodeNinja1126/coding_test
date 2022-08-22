@@ -3,11 +3,13 @@
 그리디
 '''
 from heapq import heappush, heappop, heapify
+import sys
+input = sys.stdin.readline
 N = int(input())
 if N == 0:
     print(0)
     exit()
-    
+'''
 schedule = []
 for _ in range(N):
     a, b = map(int, input().split())
@@ -41,7 +43,19 @@ for a, b in (heappop(schedule) for _ in range(N)):
         continue
     diary = diary[:i] + diary[i+1:]
     ans += a
-    
 
 print(-ans)
-        
+    
+'''
+schedule = []
+for _ in range(N):
+    a, b = map(int, input().split())
+    schedule.append((b,a))
+heapify(schedule)
+
+ans = []
+for b, a in (heappop(schedule) for _ in range(N)):
+    heappush(ans, a)
+    if len(ans) > b:
+        heappop(ans)
+print(sum(ans))
