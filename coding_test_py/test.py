@@ -4,6 +4,7 @@
 '''
 import sys
 from collections import deque
+import time
 input = sys.stdin.readline
 N, M = map(int, input().split())
 
@@ -13,13 +14,10 @@ for i in range(N):
     board.append(row)
 
 virus = []
-check_list = []
 for i in range(N):
     for j in range(N):
         if board[i][j] == 2:
             virus.append((i,j))
-        if not board[i][j]:
-            check_list.append((i,j))
 
 if all(all(row)for row in board):
     print(0)
@@ -27,6 +25,7 @@ if all(all(row)for row in board):
 
 dirs = ((0,1),(0,-1),(1,0),(-1,0))
 
+start = time.time()
 virus_map = []
 
 for x, y in virus:
@@ -54,15 +53,17 @@ combi = []
 
 def count_time():
     ret = 0
-    for i, j in check_list:
-        min_val = 10000
-        for k in combi:
-            if virus_map[k][i][j]:
-                min_val = min(min_val, virus_map[k][i][j])
-        if min_val == 10000 or \
-           min_val-1 >= ans:
-            return 10000
-        ret = max(ret, min_val)
+    for i in range(N):
+        for j in range(N):
+            if board[i][j]:
+                continue
+            min_val = 10000
+            for k in combi:
+                if virus_map[k][i][j]:
+                    min_val = min(min_val, virus_map[k][i][j])
+            if min_val == 10000:
+                return 10000
+            ret = max(ret, min_val)
     return ret - 1
 
 def dfs(depth):
