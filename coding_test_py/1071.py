@@ -5,35 +5,24 @@ from collections import Counter
 
 input()
 N = list(map(int, input().split()))
-N.sort()
+N_num = Counter(N)
+N_keys = sorted(N_num.keys())
 ans = [] 
 
-while N:
-    if N[0] + 1 in N[1:]:
-        for i in range(1, len(N)):
-            if N[0] + 1 < N[i]:
-                temp_end = N[i]
-                del N[i]
-                temp = N[0]
-                while True:
-                    if N[0] != temp:
-                        break 
-                    ans.append(N[0])
-                    del N[0]
-                ans.append(temp_end)
-                break
+for i, n in enumerate(N_keys):
+    if N_num[n] == 0:
+        continue
+    if N_num[n+1]:
+        if i+2 >= len(N_keys):
+            ans += [n+1 for _ in range(N_num[n+1])]
+            N_num[n+1] = 0
+            ans += [n for _ in range(N_num[n])]
         else:
-            for i in range(1, len(N)):
-                if N[0] + 1 == N[i]:
-                    ans.append(N[i])
-                    del N[i]
-                    break
+            ans += [n for _ in range(N_num[n])]
+            tmp_num = N_keys[i+2]
+            ans.append(tmp_num)
+            N_num[tmp_num] -= 1
     else:
-        temp = N[0]
-        while True and N:
-            if N[0] != temp:
-                break 
-            ans.append(N[0])
-            del N[0]
+        ans += [n for _ in range(N_num[n])]
 
-print(' '.join(map(str, ans)))
+print(*ans)
